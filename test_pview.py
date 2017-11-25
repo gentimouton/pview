@@ -1,13 +1,15 @@
-import unittest
+import unittest, sys
 
 import pygame
 
 import pview 
 
 
-
 class PviewTest(unittest.TestCase):
     def setUp(self):
+        if sys.platform[:5] == 'linux':
+            os.putenv('SDL_VIDEODRIVER', 'x11')
+        print('platform: ', sys.platform)
         pygame.display.init()
         driver = pygame.display.get_driver()
         print('driver: ', driver)
