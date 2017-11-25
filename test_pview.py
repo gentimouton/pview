@@ -8,7 +8,11 @@ import pview
 
 class PviewTest(unittest.TestCase):
     def setUp(self):
-        pygame.init()
+        pygame.display.init()
+        driver = pygame.display.get_driver()
+        print('driver: ', driver)
+        if not driver:
+            exit()
         # baseline resolution is 640x480 and actual resolution is 1280x960
         pview.set_mode(size0=(640, 480), height=960)
     
