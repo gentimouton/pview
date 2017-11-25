@@ -1,4 +1,4 @@
-import unittest, sys
+import unittest, sys, os
 
 import pygame
 
