@@ -5,21 +5,27 @@ import pygame
 import pview 
 
 
+# These tests work locally on Windows, but error in Travis CI.
+# Error output is: `error: No available video device`
+# One solution might be https://stackoverflow.com/a/23641501
+# But I did not manage to make it work.
+ 
+
 class PviewTest(unittest.TestCase):
     def setUp(self):
-        drivers = ['windib', 'directx', 'x11', 'dga', 'fbcon', 'directfb', 
-                   'ggi', 'vgl', 'svgalib', 'aalib', 'dummy']
-        for driver in drivers:
-            if not os.getenv('SDL_VIDEODRIVER'):
-                os.putenv('SDL_VIDEODRIVER', driver)
-            try:
-                pygame.display.init()
-            except pygame.error:
-                print('Driver: {0} failed.'.format(driver))
-                continue
-            print('Driver: {0} loaded.'.format(driver))
-            break
-#         pygame.display.init()
+#         drivers = ['windib', 'directx', 'x11', 'dga', 'fbcon', 'directfb', 
+#                    'ggi', 'vgl', 'svgalib', 'aalib', 'dummy']
+#         for driver in drivers:
+#             if not os.getenv('SDL_VIDEODRIVER'):
+#                 os.putenv('SDL_VIDEODRIVER', driver)
+#             try:
+#                 pygame.display.init()
+#             except pygame.error:
+#                 print('Driver: {0} failed.'.format(driver))
+#                 continue
+#             print('Driver: {0} loaded.'.format(driver))
+#             break
+        pygame.display.init() # this errors in Travis CI. 
         # baseline resolution is 640x480 and actual resolution is 1280x960
         pview.set_mode(size0=(640, 480), height=960)
     
