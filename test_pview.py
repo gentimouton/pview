@@ -1,4 +1,4 @@
-import unittest, sys, os
+import unittest, os
 
 import pygame
 
@@ -7,14 +7,19 @@ import pview
 
 class PviewTest(unittest.TestCase):
     def setUp(self):
-        if sys.platform[:5] == 'linux':
-            os.putenv('SDL_VIDEODRIVER', 'x11')
-        print('platform: ', sys.platform)
-        pygame.display.init()
-        driver = pygame.display.get_driver()
-        print('driver: ', driver)
-        if not driver:
-            exit()
+        drivers = ['windib', 'directx', 'x11', 'dga', 'fbcon', 'directfb', 
+                   'ggi', 'vgl', 'svgalib', 'aalib', 'dummy']
+        for driver in drivers:
+            if not os.getenv('SDL_VIDEODRIVER'):
+                os.putenv('SDL_VIDEODRIVER', driver)
+            try:
+                pygame.display.init()
+            except pygame.error:
+                print('Driver: {0} failed.'.format(driver))
+                continue
+            print('Driver: {0} loaded.'.format(driver))
+            break
+#         pygame.display.init()
         # baseline resolution is 640x480 and actual resolution is 1280x960
         pview.set_mode(size0=(640, 480), height=960)
     
